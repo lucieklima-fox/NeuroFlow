@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:vibration/vibration.dart';
+import 'package:flutter/services.dart';
 
 class ExercisePlayerScreen extends StatefulWidget {
   final Map<String, String> exerciseData;
@@ -28,23 +28,17 @@ class _ExercisePlayerScreenState extends State<ExercisePlayerScreen> {
       setState(() => _isRunning = false);
     } else {
       setState(() => _isRunning = true);
-      _triggerHaptic();
+      HapticFeedback.vibrate();
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
         if (_secondsLeft > 0) {
           setState(() => _secondsLeft--);
-          if (_secondsLeft % 5 == 0) _triggerHaptic();
+          if (_secondsLeft % 5 == 0) HapticFeedback.selectionClick();
         } else {
           _timer?.cancel();
           setState(() => _isRunning = false);
+          HapticFeedback.heavyImpact();
         }
       });
-    }
-  }
-
-  void _triggerHaptic() async {
-    bool? hasVibrator = await Vibration.hasVibrator();
-    if (hasVibrator == true) {
-      Vibration.vibrate(duration: 200, amplitude: 128);
     }
   }
 
@@ -85,3 +79,4 @@ class _ExercisePlayerScreenState extends State<ExercisePlayerScreen> {
     );
   }
 }
+
