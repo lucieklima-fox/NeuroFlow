@@ -7,7 +7,7 @@ void main() {
 }
 
 class NeuroFlowApp extends StatelessWidget {
-  const NeuroFlowApp({Key? key}) : super(key: key);
+  const NeuroFlowApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,21 +19,10 @@ class NeuroFlowApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFF0F172A),
         primarySwatch: Colors.cyan,
       ),
-      home: const MainNavigationScreen(),
+      home: const ProgressDashboardScreen(),
     );
   }
 }
-
-class MainNavigationScreen extends StatefulWidget {
-  const MainNavigationScreen({Key? key}) : super(key: key);
-
-  @override
-  State<MainNavigationScreen> createState() => _MainNavigationScreenState();
-}
-
-class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _currentIndex = 0;
-
   // Ukázková data pro první den (DAY_01)
   final Map<String, dynamic> _todayExercise = {
     'Day_ID': 'DAY_01',
