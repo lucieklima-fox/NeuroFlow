@@ -20,5 +20,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/neuroflow-30dni.csv
-    
+    - assets/neuroflow-30dni-struktura.md
+
   
