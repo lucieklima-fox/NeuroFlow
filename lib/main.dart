@@ -19,21 +19,51 @@ class NeuroFlowApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFF0F172A),
         primarySwatch: Colors.cyan,
       ),
-      home: const ProgressDashboardScreen(),
+      home: const MainNavigationScreen(),
     );
   }
 }
-  // Ukázková data pro první den (DAY_01)
-  final Map<String, dynamic> _todayExercise = {
-    'Day_ID': 'DAY_01',
-    'Week_Number': 1,
-    'Day_Title': 'Den 1: Mapování napětí',
-    'Somatic_Exercise_Title': 'Somatický scan těla',
-    'Somatic_Exercise_Text': 'Pohodlně se posaďte nebo lehněte. Zavřete oči a pomalu projděte pozorností tělo od palců u nohou až po temeno hlavy.',
-    'Neuro_Science_Why': 'Zaměření pozornosti na fyzické vjemy bez hodnocení snižuje reaktivitu amygdaly a zklidňuje osu hypotalamus-hypofýza-nadledviny.',
-    'Yoga_Philosophy': 'Pratjáhára – stažení smyslů do vnitřního světa jako první krok sebepoznání.',
-    'Haptic_Pattern': 'SLOW_WAVE',
-    'Duration_Seconds': 300,
+
+class MainNavigationScreen extends StatefulWidget {
+  const MainNavigationScreen({super.key});
+
+  @override
+  State<MainNavigationScreen> createState() => _MainNavigationScreenState();
+}
+
+class _MainNavigationScreenState extends State<MainNavigationScreen> {
+  int _currentIndex = 0;
+
+  final List<Widget> _screens = const [
+    ProgressDashboardScreen(),
+    ExercisePlayerScreen(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _screens[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.dashboard),
+            label: 'Nástěnka',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.fitness_center),
+            label: 'Cvičení',
+          ),
+        ],
+      ),
+    );
+  }
+}
   };
 
   // Ukázkový stav dokončených dní
