@@ -34,9 +34,9 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = const [
-    ProgressDashboardScreen(completedDays: 0),
-    ExercisePlayerScreen(),
+  final List<Widget> _screens = [
+    const ProgressDashboardScreen(completedDays: {}),
+    ExercisePlayerScreen(exerciseData: const {}),
   ];
 
   @override
@@ -64,4 +64,5 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     );
   }
 }
+
 
