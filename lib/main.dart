@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'screens/exercise_player_screen.dart';
-import 'screens/progress_dashboard_screen.dart';
+import 'exercise_player_screen.dart';
+import 'progress_dashboard_screen.dart';
 
 void main() {
   runApp(const NeuroFlowApp());
