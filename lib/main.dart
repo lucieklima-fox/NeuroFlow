@@ -35,7 +35,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = const [
-    ProgressDashboardScreen(),
+    ProgressDashboardScreen(completedDays: 0),
     ExercisePlayerScreen(),
   ];
 
@@ -64,3 +64,4 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     );
   }
 }
+
