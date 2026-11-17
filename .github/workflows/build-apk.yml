@@ -2,6 +2,9 @@ name: Build NeuroFlow debug APK
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - build-apk-workflow
 
 permissions:
   contents: read
