@@ -1,0 +1,58 @@
+name: Build NeuroFlow debug APK
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: '3.50.0'
+          cache: true
+
+      - name: Generate Android shell in the CI copy only
+        run: |
+          flutter --version
+          flutter create --platforms=android --org com.example --project-name neuroflow /tmp/scaffold
+          rm -rf android
+          cp -r /tmp/scaffold/android android
+          grep -n applicationId android/app/build.gradle* || true
+
+      - name: Fetch packages
+        run: flutter pub get
+
+      - name: Build debug APK
+        run: flutter build apk --debug
+
+      - name: Verify package identity and signing
+        run: |
+          APK=build/app/outputs/flutter-apk/app-debug.apk
+          ls -l "$APK"
+          BT=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+          "$BT/aapt" dump badging "$APK" | head -3
+          "$BT/apksigner" verify --print-certs "$APK"
+          sha256sum "$APK"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: neuroflow-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          if-no-files-found: error
